@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BeeTrackingApplication</string>
+    <string name="map">map</string>
+    <string name="list">list</string>
 </resources>
