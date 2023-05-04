@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         if (supportFragmentManager.findFragmentByTag(tag) == null) {
             val transaction = supportFragmentManager.beginTransaction()
             when (tag) {
-                "CAMERA" -> transaction.replace(R.id.fragmentContainerView, CameraFragment.newInstance(), "CAMERA")
+                //"CAMERA" -> transaction.replace(R.id.fragmentContainerView, CameraFragment.newInstance(), "CAMERA")
                 "MAP" -> transaction.replace(R.id.fragmentContainerView, BeeMapFragment.newInstance(), "MAP")
                 "LIST" -> transaction.replace(R.id.fragmentContainerView, BeeListFragment.newInstance(), "LIST")
             }

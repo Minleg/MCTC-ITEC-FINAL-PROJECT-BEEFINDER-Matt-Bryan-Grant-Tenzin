@@ -25,7 +25,7 @@
         android:layout_marginBottom="32dp"
         android:clickable="false"
         android:focusable="false"
-        android:src="@drawable/tree"
+        android:src="@drawable/bee_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:contentDescription="@string/add_bee"/>
