@@ -2,4 +2,9 @@
     <string name="app_name">BeeTrackingApplication</string>
     <string name="map">map</string>
     <string name="list">list</string>
+    <string name="success">Bzzzz...  Success!\nThank you for your bee contribution!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="success_message">Bzzzzz... your bee photo has been successfully uploaded!</string>
+    <string name="success_heading">Success!</string>
 </resources>
