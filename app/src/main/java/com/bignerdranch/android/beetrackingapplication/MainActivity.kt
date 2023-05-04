@@ -2,6 +2,7 @@ package com.bignerdranch.android.beetrackingapplication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 private const val TAG = "MAIN_ACTIVITY"

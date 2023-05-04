@@ -88,7 +88,7 @@ class CameraFragment : Fragment() {
                 .addOnCompleteListener {
                     Snackbar.make(requireView(), "Image uploaded!", Snackbar.LENGTH_LONG).show()
                     uploadProgressBar.visibility = View.GONE
-                    Log.d(TAG, "Image")
+                    Log.d(TAG, "${imageFileReference.path}")
                 }
                 .addOnFailureListener {
                     Snackbar.make(requireView(), "Error uploading image", Snackbar.LENGTH_LONG).show()
@@ -113,7 +113,7 @@ class CameraFragment : Fragment() {
             newPhotoPath = photoFilePath
             photoUri = FileProvider.getUriForFile(
                 requireContext(),
-                "com.example.android.collage.fileprovider",
+                "com.bignerdranch.android.beetrackingapplication.fileprovider",
                 photoFile
             )
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
@@ -146,14 +146,6 @@ class CameraFragment : Fragment() {
         }
     }
 
-//    override fun onWindowFocusChanged(hasFocus: Boolean) {
-//        super.onWindowFocusChanged(hasFocus)
-//        Log.d(TAG, "on window focus changed $hasFocus visible image at $visibleImagePath")
-//        if (hasFocus) {
-//            visibleImagePath?.let { imagePath ->
-//                loadImage(imageButton, imagePath) }
-//        }
-//    }
 
     private fun loadImage(imageButton: ImageButton, imagePath: String) {
         Picasso.get()
