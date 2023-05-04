@@ -6,6 +6,8 @@ plugins {
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
+apply plugin: 'com.google.gms.google-services'
+
 android {
     namespace 'com.bignerdranch.android.beetrackingapplication'
     compileSdk 33

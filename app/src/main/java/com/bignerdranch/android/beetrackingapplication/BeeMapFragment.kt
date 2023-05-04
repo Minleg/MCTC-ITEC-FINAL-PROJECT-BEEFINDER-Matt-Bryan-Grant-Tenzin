@@ -32,7 +32,7 @@ import java.util.Date
 
 private const val TAG = "BEE_MAP_FRAGMENT"
 
-class TreeMapFragment : Fragment() {
+class BeeMapFragment : Fragment() {
 
     private lateinit var addBeeButton: FloatingActionButton
 
@@ -179,7 +179,7 @@ class TreeMapFragment : Fragment() {
 
         requestLocationPermission()
 
-        beeViewModel.latestBess.observe(requireActivity()) { latestBees ->
+        beeViewModel.latestBees.observe(requireActivity()) { latestBees ->
             beeList = latestBees
             drawBees()
         }
@@ -219,14 +219,14 @@ class TreeMapFragment : Fragment() {
             marker.remove()
         }
 
-        for (tree in beeList) {
-            tree.location?.let { geoPoint ->
+        for (bee in beeList) {
+            bee.location?.let { geoPoint ->
 
                 val iconId = R.drawable.bee_small
 
                 val markerOptions = MarkerOptions()
                     .position(LatLng(geoPoint.latitude, geoPoint.longitude))
-                    .title(bee.name)
+                    .title(bee.imagePath)
                     .snippet("Spotted on ${bee.dateSpotted}")
                     .icon(BitmapDescriptorFactory.fromResource(iconId))
 
