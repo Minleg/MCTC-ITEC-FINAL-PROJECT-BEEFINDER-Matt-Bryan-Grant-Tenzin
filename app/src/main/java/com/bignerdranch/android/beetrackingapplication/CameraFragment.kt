@@ -37,7 +37,6 @@ class CameraFragment : Fragment() {
     private lateinit var imageButton: ImageButton
     private lateinit var uploadImageFab: FloatingActionButton
     private lateinit var uploadProgressBar: ProgressBar
-    private lateinit var mainView: View
 
     private var newPhotoPath: String? = null
     private var visibleImagePath: String? = null
@@ -53,23 +52,24 @@ class CameraFragment : Fragment() {
             result -> handleImage(result)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_camera)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        val mainView = inflater.inflate(R.layout.fragment_camera, container, false)
 
         newPhotoPath = savedInstanceState?.getString(NEW_PHOTO_PATH_KEY)
         visibleImagePath = savedInstanceState?.getString(VISIBLE_IMAGE_PATH_KEY)
 
-        mainView = findViewById(R.id.content)
-
-        uploadProgressBar = findViewById(R.id.upload_progress_bar)
-        uploadImageFab = findViewById(R.id.upload_image_button)
+        uploadProgressBar = mainView.findViewById(R.id.upload_progress_bar)
+        uploadImageFab = mainView.findViewById(R.id.upload_image_button)
 
         uploadImageFab.setOnClickListener {
             uploadImage()
         }
 
-        imageButton = findViewById(R.id.imageButton)
+        imageButton = mainView.findViewById(R.id.imageButton)
         imageButton.setOnClickListener {
             takePicture()
         }
@@ -85,16 +85,17 @@ class CameraFragment : Fragment() {
             val imageFileReference = imageCollectionReference.child(imageFilename!!)
             imageFileReference.putFile(photoUri!!)
                 .addOnCompleteListener {
-                    Snackbar.make(mainView, "Image uploaded!", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(requireView(), "Image uploaded!", Snackbar.LENGTH_LONG).show()
                     uploadProgressBar.visibility = View.GONE
+                    Log.d(TAG, "Image")
                 }
-                .addOnFailureListener { error ->
-                    Snackbar.make(mainView, "Error uploading image", Snackbar.LENGTH_LONG).show()
-                    Log.e(TAG, "Error uploading image $imageFilename", error)
+                .addOnFailureListener {
+                    Snackbar.make(requireView(), "Error uploading image", Snackbar.LENGTH_LONG).show()
+                    Log.e(TAG, "Error uploading image $imageFilename")
                     uploadProgressBar.visibility = View.GONE
                 }
         } else {
-            Snackbar.make(mainView, "Take a picture first!", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(requireView(), "Take a picture first!", Snackbar.LENGTH_LONG).show()
         }
     }
 
