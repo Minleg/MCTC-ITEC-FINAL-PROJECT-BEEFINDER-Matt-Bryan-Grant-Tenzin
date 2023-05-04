@@ -8,14 +8,14 @@ private const val TAG = "MAIN_ACTIVITY"
 
 class MainActivity : AppCompatActivity() {
 
-    val CURRENT_FRAGMEN_BUNDLE_KEY = "current fragment bundle key"
+    val CURRENT_FRAGMENT_BUNDLE_KEY = "current fragment bundle key"
     var currentFragmentTag = "MAP"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        currentFragmentTag = savedInstanceState?.getString(CURRENT_FRAGMEN_BUNDLE_KEY) ?: "MAP"
+        currentFragmentTag = savedInstanceState?.getString(CURRENT_FRAGMENT_BUNDLE_KEY) ?: "MAP"
         showFragment(currentFragmentTag)
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
@@ -46,6 +46,6 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(CURRENT_FRAGMEN_BUNDLE_KEY, currentFragmentTag)
+        outState.putString(CURRENT_FRAGMENT_BUNDLE_KEY, currentFragmentTag)
     }
 }
