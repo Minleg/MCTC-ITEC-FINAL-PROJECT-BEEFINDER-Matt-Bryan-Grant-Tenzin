@@ -73,6 +73,7 @@ class CameraFragment : Fragment() {
         imageButton.setOnClickListener {
             takePicture()
         }
+        return mainView
     }
 
     private fun uploadImage() {
@@ -111,7 +112,7 @@ class CameraFragment : Fragment() {
         if (photoFile != null) {
             newPhotoPath = photoFilePath
             photoUri = FileProvider.getUriForFile(
-                this,
+                requireContext(),
                 "com.example.android.collage.fileprovider",
                 photoFile
             )
@@ -124,9 +125,9 @@ class CameraFragment : Fragment() {
         try {
             val dateTime = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
             imageFilename = "BEE_PHOTO_$dateTime"
-            val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-            val file = File.createTempFile(imageFilename, ".jpg", storageDir)
-            val filePath = file.absolutePath
+            val storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+            val file = imageFilename?.let { File.createTempFile(it, ".jpg", storageDir) }
+            val filePath = file?.absolutePath
             return file to filePath
         } catch (ex: IOException) {
             return null to null
@@ -145,14 +146,14 @@ class CameraFragment : Fragment() {
         }
     }
 
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        Log.d(TAG, "on window focus changed $hasFocus visible image at $visibleImagePath")
-        if (hasFocus) {
-            visibleImagePath?.let { imagePath ->
-                loadImage(imageButton, imagePath) }
-        }
-    }
+//    override fun onWindowFocusChanged(hasFocus: Boolean) {
+//        super.onWindowFocusChanged(hasFocus)
+//        Log.d(TAG, "on window focus changed $hasFocus visible image at $visibleImagePath")
+//        if (hasFocus) {
+//            visibleImagePath?.let { imagePath ->
+//                loadImage(imageButton, imagePath) }
+//        }
+//    }
 
     private fun loadImage(imageButton: ImageButton, imagePath: String) {
         Picasso.get()
@@ -168,5 +169,9 @@ class CameraFragment : Fragment() {
                     Log.e(TAG, "Error loading image $imagePath", e)
                 }
             })
+    }
+    companion object {
+        @JvmStatic
+        fun newInstance() = CameraFragment()
     }
 }
