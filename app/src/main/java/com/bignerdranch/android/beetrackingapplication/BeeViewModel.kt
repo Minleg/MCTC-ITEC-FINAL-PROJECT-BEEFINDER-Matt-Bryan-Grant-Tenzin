@@ -13,6 +13,7 @@ class BeeViewModel : ViewModel() {
 
     private val db = Firebase.firestore
     private val beeCollectionReference = db.collection("bees")
+    var newBee: Bee? = null
 
     val latestBees = MutableLiveData<List<Bee>>()
 
@@ -35,14 +36,19 @@ class BeeViewModel : ViewModel() {
             }
         }
 
-    fun addBee(bee: Bee) {
-        beeCollectionReference.add(bee)
+    fun addBee() {
+        // todo null check
+        beeCollectionReference.add(newBee!!)
             .addOnSuccessListener { beeDocumentReference ->
                 Log.d(TAG, "New bee added at ${beeDocumentReference.path}")
             }
             .addOnFailureListener { error ->
-                Log.e(TAG, "Error adding bee $bee", error)
+                Log.e(TAG, "Error adding bee", error)
             }
+    }
+
+    fun setImagePath(imagePath: String?) {
+        newBee.documentReference?.update("imagePath", imagePath)
     }
 
     fun deleteBee(bee: Bee) {

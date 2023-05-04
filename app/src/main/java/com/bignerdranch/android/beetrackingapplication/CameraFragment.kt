@@ -18,6 +18,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.ktx.Firebase
@@ -33,6 +34,10 @@ import java.util.Date
 private const val TAG = "CAMERA_FRAGMENT"
 
 class CameraFragment : Fragment() {
+
+    private val beeViewModel: BeeViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(BeeViewModel::class.java)
+    }
 
     private lateinit var imageButton: ImageButton
     private lateinit var uploadImageFab: FloatingActionButton
@@ -95,6 +100,7 @@ class CameraFragment : Fragment() {
                     Log.e(TAG, "Error uploading image $imageFilename")
                     uploadProgressBar.visibility = View.GONE
                 }
+            beeViewModel.setImagePath(bee, imageFileReference.path)
         } else {
             Snackbar.make(requireView(), "Take a picture first!", Snackbar.LENGTH_LONG).show()
         }
