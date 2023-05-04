@@ -1,5 +1,7 @@
 package com.bignerdranch.android.beetrackingapplication
 
+import android.app.Activity.RESULT_CANCELED
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -18,6 +20,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import java.io.File
 import java.io.IOException
 import java.lang.Exception
@@ -116,7 +122,7 @@ class CameraFragment : Fragment() {
     private fun createImageFile(): Pair<File?, String?> {
         try {
             val dateTime = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-            imageFilename = "COLLAGE_$dateTime"
+            imageFilename = "BEE_PHOTO_$dateTime"
             val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
             val file = File.createTempFile(imageFilename, ".jpg", storageDir)
             val filePath = file.absolutePath
