@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,8 +15,8 @@ import android.widget.ImageButton
 import android.widget.ProgressBar
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -53,15 +52,16 @@ class CameraFragment : Fragment() {
 
     private val storage = Firebase.storage
 
-    private val cameraActivityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            result -> handleImage(result)
-    }
+    private val cameraActivityLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            handleImage(result)
+        }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
-
         val mainView = inflater.inflate(R.layout.fragment_camera, container, false)
 
         newPhotoPath = savedInstanceState?.getString(NEW_PHOTO_PATH_KEY)
@@ -83,7 +83,6 @@ class CameraFragment : Fragment() {
 
     private fun uploadImage() {
         if (photoUri != null && imageFilename != null) {
-
             uploadProgressBar.visibility = View.VISIBLE
 
             val imageStorageRootReference = storage.reference
@@ -96,11 +95,12 @@ class CameraFragment : Fragment() {
                     Log.d(TAG, "${imageFileReference.path}")
                 }
                 .addOnFailureListener {
-                    Snackbar.make(requireView(), "Error uploading image", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(requireView(), "Error uploading image", Snackbar.LENGTH_LONG)
+                        .show()
                     Log.e(TAG, "Error uploading image $imageFilename")
                     uploadProgressBar.visibility = View.GONE
                 }
-            beeViewModel.setImagePath(bee, imageFileReference.path)
+            beeViewModel.setImagePath(imageFileReference.path)
         } else {
             Snackbar.make(requireView(), "Take a picture first!", Snackbar.LENGTH_LONG).show()
         }
@@ -120,7 +120,7 @@ class CameraFragment : Fragment() {
             photoUri = FileProvider.getUriForFile(
                 requireContext(),
                 "com.bignerdranch.android.beetrackingapplication.fileprovider",
-                photoFile
+                photoFile,
             )
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
             cameraActivityLauncher.launch(takePictureIntent)
@@ -146,12 +146,12 @@ class CameraFragment : Fragment() {
                 Log.d(TAG, "Result ok, user took picture, image at $newPhotoPath")
                 visibleImagePath = newPhotoPath
             }
+
             RESULT_CANCELED -> {
                 Log.d(TAG, "Result cancelled, no photo taken")
             }
         }
     }
-
 
     private fun loadImage(imageButton: ImageButton, imagePath: String) {
         Picasso.get()
@@ -159,15 +159,20 @@ class CameraFragment : Fragment() {
             .error(android.R.drawable.stat_notify_error)
             .fit()
             .centerCrop()
-            .into(imageButton, object: Callback {
-                override fun onSuccess() {
-                    Log.d(TAG, "Loaded image $imagePath")
-                }
-                override fun onError(e: Exception?) {
-                    Log.e(TAG, "Error loading image $imagePath", e)
-                }
-            })
+            .into(
+                imageButton,
+                object : Callback {
+                    override fun onSuccess() {
+                        Log.d(TAG, "Loaded image $imagePath")
+                    }
+
+                    override fun onError(e: Exception?) {
+                        Log.e(TAG, "Error loading image $imagePath", e)
+                    }
+                },
+            )
     }
+
     companion object {
         @JvmStatic
         fun newInstance() = CameraFragment()

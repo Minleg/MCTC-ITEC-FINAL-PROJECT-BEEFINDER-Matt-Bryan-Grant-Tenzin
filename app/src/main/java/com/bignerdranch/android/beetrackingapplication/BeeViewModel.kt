@@ -14,6 +14,7 @@ class BeeViewModel : ViewModel() {
     private val db = Firebase.firestore
     private val beeCollectionReference = db.collection("bees")
     var newBee: Bee? = null
+    var imageLocationPath: String? = null
 
     val latestBees = MutableLiveData<List<Bee>>()
 
@@ -48,7 +49,12 @@ class BeeViewModel : ViewModel() {
     }
 
     fun setImagePath(imagePath: String?) {
-        newBee.documentReference?.update("imagePath", imagePath)
+        imageLocationPath = imagePath
+        newBee?.documentReference?.update("imagePath", imageLocationPath)
+    }
+
+    fun getImagePath(): String? {
+        return imageLocationPath
     }
 
     fun deleteBee(bee: Bee) {
