@@ -11,4 +11,5 @@
     <string name="confirm_delete_bee">Delete bee?</string>
     <string name="delete">Delete?</string>
     <string name="bee_deleted">Deleted bee</string>
+    <string name="bee_picture">A picture of the bee</string>
 </resources>
