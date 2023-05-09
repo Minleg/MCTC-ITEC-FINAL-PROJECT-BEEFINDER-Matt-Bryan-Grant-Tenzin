@@ -12,4 +12,8 @@
     <string name="delete">Delete?</string>
     <string name="bee_deleted">Deleted bee</string>
     <string name="bee_picture">A picture of the bee</string>
+    <string name="success_message">Bzzzzzz…thank you for your bee submission!</string>
+    <string name="success_heading">Success!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
