@@ -93,6 +93,7 @@ class CameraFragment : Fragment() {
                     Snackbar.make(requireView(), "Image uploaded!", Snackbar.LENGTH_LONG).show()
                     uploadProgressBar.visibility = View.GONE
                     Log.d(TAG, "${imageFileReference.path}")
+//TODO Transition to Success fragment here
                 }
                 .addOnFailureListener {
                     Snackbar.make(requireView(), "Error uploading image", Snackbar.LENGTH_LONG)

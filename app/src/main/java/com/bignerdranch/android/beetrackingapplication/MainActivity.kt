@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
                 "CAMERA" -> transaction.replace(R.id.fragmentContainerView, CameraFragment.newInstance(), "CAMERA")
                 "MAP" -> transaction.replace(R.id.fragmentContainerView, BeeMapFragment.newInstance(), "MAP")
                 "LIST" -> transaction.replace(R.id.fragmentContainerView, BeeListFragment.newInstance(), "LIST")
+                "SUCCESS" -> transaction.replace(R.id.fragmentContainerView, BeeListFragment.newInstance(), "SUCCESS")
             }
             transaction.commit()
         }
