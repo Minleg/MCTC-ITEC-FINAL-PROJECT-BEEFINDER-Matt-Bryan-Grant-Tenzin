@@ -3,14 +3,17 @@ package com.bignerdranch.android.beetrackingapplication
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 
 class BeeRecyclerViewAdapter(var bees: List<Bee>) : RecyclerView.Adapter<BeeRecyclerViewAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(bee: Bee) {
             view.findViewById<TextView>(R.id.date_spotted).text = "${bee.dateSpotted}"
+            Picasso.get().load(bee.imagePath).into(view.findViewById<ImageView>(R.id.imageView))
         }
     }
 

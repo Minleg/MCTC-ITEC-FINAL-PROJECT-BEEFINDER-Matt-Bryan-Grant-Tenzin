@@ -6,14 +6,13 @@ import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -78,7 +77,6 @@ class BeeMapFragment : Fragment() {
     }
 
     private fun updateMap() {
-
         drawBees()
 
         if (locationPermissionGranted) {
@@ -93,11 +91,15 @@ class BeeMapFragment : Fragment() {
         addBeeButton.isEnabled = isEnabled
 
         if (isEnabled) {
-            addBeeButton.backgroundTintList = AppCompatResources.getColorStateList(requireActivity(),
-                android.R.color.holo_blue_light)
+            addBeeButton.backgroundTintList = AppCompatResources.getColorStateList(
+                requireActivity(),
+                android.R.color.holo_blue_light,
+            )
         } else {
-            addBeeButton.backgroundTintList = AppCompatResources.getColorStateList(requireActivity(),
-                android.R.color.darker_gray)
+            addBeeButton.backgroundTintList = AppCompatResources.getColorStateList(
+                requireActivity(),
+                android.R.color.darker_gray,
+            )
         }
     }
 
@@ -106,22 +108,27 @@ class BeeMapFragment : Fragment() {
     }
 
     private fun requestLocationPermission() {
-        if (ContextCompat.checkSelfPermission(requireActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
+        if (ContextCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION,
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             locationPermissionGranted = true
             Log.d(TAG, "permission already granted")
             updateMap()
             setAddBeeButtonEnabled(true)
-            fusedLocationProvider = LocationServices.getFusedLocationProviderClient(requireActivity())
+            fusedLocationProvider =
+                LocationServices.getFusedLocationProviderClient(requireActivity())
         } else {
             val requestLocationPermissionLauncher = registerForActivityResult(
-                ActivityResultContracts.RequestPermission()) { granted ->
+                ActivityResultContracts.RequestPermission(),
+            ) { granted ->
                 if (granted) {
                     Log.d(TAG, "User granted permission")
                     setAddBeeButtonEnabled(true)
                     locationPermissionGranted = true
-                    fusedLocationProvider = LocationServices.getFusedLocationProviderClient(requireActivity())
+                    fusedLocationProvider =
+                        LocationServices.getFusedLocationProviderClient(requireActivity())
                 } else {
                     Log.d(TAG, "User did not grant permission")
                     setAddBeeButtonEnabled(false)
@@ -146,10 +153,10 @@ class BeeMapFragment : Fragment() {
             map?.uiSettings?.isMyLocationButtonEnabled = true
             map?.uiSettings?.isZoomControlsEnabled = true
 
-            fusedLocationProvider?.lastLocation?.addOnCompleteListener {getLocationTask ->
+            fusedLocationProvider?.lastLocation?.addOnCompleteListener { getLocationTask ->
                 val location = getLocationTask.result
                 if (location != null) {
-                    Log.d(TAG, "User's location ${location}")
+                    Log.d(TAG, "User's location $location")
                     val center = LatLng(location.latitude, location.longitude)
                     val zoomLevel = 12f
                     map?.moveCamera(CameraUpdateFactory.newLatLngZoom(center, zoomLevel))
@@ -162,8 +169,9 @@ class BeeMapFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
         val mainView = inflater.inflate(R.layout.fragment_bee_map, container, false)
 
@@ -172,7 +180,8 @@ class BeeMapFragment : Fragment() {
             addBeeAtLocation()
         }
 
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map_view) as SupportMapFragment?
+        val mapFragment =
+            childFragmentManager.findFragmentById(R.id.map_view) as SupportMapFragment?
         mapFragment?.getMapAsync(mapReadyCallback)
 
         setAddBeeButtonEnabled(false)
@@ -189,8 +198,12 @@ class BeeMapFragment : Fragment() {
 
     @SuppressLint("MissingPermission")
     private fun addBeeAtLocation() {
-        if (map == null) { return }
-        if (fusedLocationProvider == null) { return }
+        if (map == null) {
+            return
+        }
+        if (fusedLocationProvider == null) {
+            return
+        }
         if (!locationPermissionGranted) {
             showSnackbar(getString(R.string.grant_location_permission))
             return
@@ -201,9 +214,11 @@ class BeeMapFragment : Fragment() {
             if (location != null) {
                 val bee = Bee(
                     dateSpotted = Date(),
-                    location = GeoPoint(location.latitude, location.longitude)
+                    location = GeoPoint(location.latitude, location.longitude),
+                    imagePath = beeViewModel.getImagePath()
                 )
-                beeViewModel.addBee(bee)
+                beeViewModel.newBee = bee
+                beeViewModel.addBee()
                 moveMapToUserLocation()
                 showSnackbar(getString(R.string.added_bee))
             } else {
@@ -213,7 +228,9 @@ class BeeMapFragment : Fragment() {
     }
 
     private fun drawBees() {
-        if (map == null) { return }
+        if (map == null) {
+            return
+        }
 
         for (marker in beeMarkers) {
             marker.remove()
