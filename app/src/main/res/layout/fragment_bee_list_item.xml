@@ -27,8 +27,8 @@
 
     <ImageView
         android:id="@+id/beeImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/beeImage_width"
+        android:layout_height="@dimen/beeImage_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/date_spotted"
         app:layout_constraintHorizontal_bias="0.5"
