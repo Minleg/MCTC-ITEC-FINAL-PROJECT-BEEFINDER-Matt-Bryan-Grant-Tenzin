@@ -21,12 +21,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/beeImageView"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="May 02, 2023" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/beeImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,6 +34,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/bee_small" />
+        app:srcCompat="@drawable/bee_small"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
