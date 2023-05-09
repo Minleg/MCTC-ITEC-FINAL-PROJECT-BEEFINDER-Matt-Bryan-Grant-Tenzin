@@ -21,24 +21,24 @@ class BeeRecyclerViewAdapter(var bees: List<Bee>) :
         var imageView: ImageView = view.findViewById(R.id.beeImageView)
         fun bind(bee: Bee) {
             view.findViewById<TextView>(R.id.date_spotted).text = "${bee.dateSpotted}"
-            loadImage(bee.imagePath!!, imageView)
-//            Picasso.get()
-//                .load(baseImagePath + bee.imagePath)
-//                .placeholder(R.drawable.placeholder_image) // Add placeholder image resource
-//                .error(R.drawable.error_images) // Add error image resource
-//                .into(
-//                    imageView,
-//                    object : Callback {
-//                        override fun onSuccess() {
-//                            // Image loaded successfully
-//                        }
-//
-//                        override fun onError(e: Exception?) {
-//                            // Log the error
-//                            Log.e("Picasso", "Error loading image: ${e?.message}")
-//                        }
-//                    },
-//                )
+            // loadImage(bee.imagePath!!, imageView)
+            Picasso.get()
+                .load(baseImagePath + bee.imagePath)
+                .placeholder(R.drawable.placeholder_image) // Add placeholder image resource
+                .error(R.drawable.error_images) // Add error image resource
+                .into(
+                    imageView,
+                    object : Callback {
+                        override fun onSuccess() {
+                            // Image loaded successfully
+                        }
+
+                        override fun onError(e: Exception?) {
+                            // Log the error
+                            Log.e("Picasso", "Error loading image: ${e?.message}")
+                        }
+                    },
+                )
         }
     }
 
@@ -71,15 +71,15 @@ class BeeRecyclerViewAdapter(var bees: List<Bee>) :
         return bees.size
     }
 
-    fun loadImage(imagePath: String, imageView: ImageView) {
-        val storageRef = Firebase.storage.reference
-        val imageRef = storageRef.child(imagePath)
-
-        imageRef.downloadUrl.addOnSuccessListener { uri ->
-            Picasso.get().load(uri).into(imageView)
-        }.addOnFailureListener { exception ->
-            // Handle the error
-            Log.e("Adapter", "Error loading image: ${exception.message}")
-        }
-    }
+//    fun loadImage(imagePath: String, imageView: ImageView) {
+//        val storageRef = Firebase.storage.reference
+//        val imageRef = storageRef.child(imagePath)
+//
+//        imageRef.downloadUrl.addOnSuccessListener { uri ->
+//            Picasso.get().load(uri).into(imageView)
+//        }.addOnFailureListener { exception ->
+//            // Handle the error
+//            Log.e("Adapter", "Error loading image: ${exception.message}")
+//        }
+//    }
 }
